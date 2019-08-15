@@ -2,10 +2,11 @@
 34.203.227.114
 
 [webserver]
-54.85.253.7
+54.172.117.83
+3.87.24.206
 
 [database]
-3.95.224.47
+3.86.154.85
 
 [control]
 ansible-control ansible_connection=local
