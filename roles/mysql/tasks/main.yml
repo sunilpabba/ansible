@@ -1,7 +1,19 @@
 ---
-- name: install mysql-server
+- name: install mysql tools
+  apt: name=python-mysqldb state=present update_cache=yes
+
+- name: install mysql
   apt: name=mysql-server state=present update_cache=yes
 
-- name: ensure mysql started
+- name: ensure mysql is running
   service: name=mysql state=started enabled=yes
 
+- name: ensure the serivce listening on all hosts
+  lineinfile: dest=/etc/mysql/mysql.conf.d/mysqld.cnf regexp=^bind-address line="bind-address = {{ ansible_eth0.ipv4.address }}"
+  notify: restart mysql
+
+- name: create database
+  mysql_db: name=demo state=present
+
+- name: create user
+  mysql_user: name=demo password=demo priv=demo.*:ALL host='localhost' state=present
